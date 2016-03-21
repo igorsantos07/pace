@@ -245,7 +245,9 @@
         this.el = document.createElement('div');
         this.el.className = "pace pace-active";
         document.body.className = document.body.className.replace(/pace-done/g, '');
-        document.body.className += ' pace-running';
+        if (!/pace-running/.test(document.body.className)) {
+          document.body.className += ' pace-running';
+        }
         this.el.innerHTML = '<div class="pace-progress">\n  <div class="pace-progress-inner"></div>\n</div>\n<div class="pace-activity"></div>';
         if (targetElement.firstChild != null) {
           targetElement.insertBefore(this.el, targetElement.firstChild);
@@ -920,12 +922,12 @@
     }
   };
 
-  if (typeof define === 'function' && define.amd) {
+  if (typeof exports === 'object') {
+    module.exports = Pace;
+  } else if (typeof define === 'function' && define.amd) {
     define(['pace'], function() {
       return Pace;
     });
-  } else if (typeof exports === 'object') {
-    module.exports = Pace;
   } else {
     if (options.startOnPageLoad) {
       Pace.start();
